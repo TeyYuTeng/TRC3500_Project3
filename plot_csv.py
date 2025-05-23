@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import csv
 
 # === Settings ===
-csv_file = 'test.csv'
+csv_file = 'trial4.csv'
 
 # === Data containers ===
 time_vals = []

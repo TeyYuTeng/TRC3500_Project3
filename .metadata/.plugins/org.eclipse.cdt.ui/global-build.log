@@ -288,3 +288,127 @@ Finished building: default.size.stdout
  
 Finished building: Project3.list
  
+14:53:40 **** Incremental Build of configuration Debug for project Project3 ****
+make -j16 all 
+arm-none-eabi-size  Project3.elf 
+   text	   data	    bss	    dec	    hex	filename
+  24952	     92	   2300	  27344	   6ad0	Project3.elf
+Finished building: default.size.stdout
+ 
+17:23:13 **** Incremental Build of configuration Debug for project Project3 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32l4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32l4xx_hal_msp.d" -MT"Core/Src/stm32l4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32l4xx_hal_msp.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:112:29: warning: passing argument 2 of 'HAL_ADC_Start_DMA' from incompatible pointer type [-Wincompatible-pointer-types]
+  112 |   HAL_ADC_Start_DMA(&hadc1, adc_buffer, 2);
+      |                             ^~~~~~~~~~
+      |                             |
+      |                             uint16_t * {aka short unsigned int *}
+In file included from ../Core/Inc/stm32l4xx_hal_conf.h:278,
+                 from ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h:1945:78: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'uint16_t *' {aka 'short unsigned int *'}
+ 1945 | HAL_StatusTypeDef       HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, uint32_t *pData, uint32_t Length);
+      |                                                                    ~~~~~~~~~~^~~~~
+../Core/Src/main.c:123:39: warning: passing argument 2 of 'HAL_ADC_Start_DMA' from incompatible pointer type [-Wincompatible-pointer-types]
+  123 |             HAL_ADC_Start_DMA(&hadc1, adc_buffer, 2);
+      |                                       ^~~~~~~~~~
+      |                                       |
+      |                                       uint16_t * {aka short unsigned int *}
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h:1945:78: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'uint16_t *' {aka 'short unsigned int *'}
+ 1945 | HAL_StatusTypeDef       HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, uint32_t *pData, uint32_t Length);
+      |                                                                    ~~~~~~~~~~^~~~~
+../Core/Src/main.c:126:27: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
+  126 |                 int len = snprintf(msg, sizeof(msg), "ADC: %lu, %lu\r\n",adc_buffer[0], adc_buffer[1]);
+      |                           ^~~~~~~~
+../Core/Src/main.c:21:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+   20 | #include "main.h"
+  +++ |+#include <stdio.h>
+   21 | 
+../Core/Src/main.c:126:27: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
+  126 |                 int len = snprintf(msg, sizeof(msg), "ADC: %lu, %lu\r\n",adc_buffer[0], adc_buffer[1]);
+      |                           ^~~~~~~~
+../Core/Src/main.c:126:27: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+../Core/Src/main.c:126:62: warning: format '%lu' expects argument of type 'long unsigned int', but argument 4 has type 'int' [-Wformat=]
+  126 |                 int len = snprintf(msg, sizeof(msg), "ADC: %lu, %lu\r\n",adc_buffer[0], adc_buffer[1]);
+      |                                                            ~~^           ~~~~~~~~~~~~~
+      |                                                              |                     |
+      |                                                              long unsigned int     int
+      |                                                            %u
+../Core/Src/main.c:126:67: warning: format '%lu' expects argument of type 'long unsigned int', but argument 5 has type 'int' [-Wformat=]
+  126 |                 int len = snprintf(msg, sizeof(msg), "ADC: %lu, %lu\r\n",adc_buffer[0], adc_buffer[1]);
+      |                                                                 ~~^                     ~~~~~~~~~~~~~
+      |                                                                   |                               |
+      |                                                                   long unsigned int               int
+      |                                                                 %u
+arm-none-eabi-gcc -o "Project3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\yttey\Desktop\TRC3500_Project3\Project3\STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Project3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Project3.elf
+ 
+arm-none-eabi-size  Project3.elf 
+arm-none-eabi-objdump -h -S Project3.elf  > "Project3.list"
+   text	   data	    bss	    dec	    hex	filename
+  24904	     92	   2300	  27296	   6aa0	Project3.elf
+Finished building: default.size.stdout
+ 
+Finished building: Project3.list
+ 
+17:23:27 **** Incremental Build of configuration Debug for project Project3 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:112:29: warning: passing argument 2 of 'HAL_ADC_Start_DMA' from incompatible pointer type [-Wincompatible-pointer-types]
+  112 |   HAL_ADC_Start_DMA(&hadc1, adc_buffer, 2);
+      |                             ^~~~~~~~~~
+      |                             |
+      |                             uint16_t * {aka short unsigned int *}
+In file included from ../Core/Inc/stm32l4xx_hal_conf.h:278,
+                 from ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h:1945:78: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'uint16_t *' {aka 'short unsigned int *'}
+ 1945 | HAL_StatusTypeDef       HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, uint32_t *pData, uint32_t Length);
+      |                                                                    ~~~~~~~~~~^~~~~
+../Core/Src/main.c:123:39: warning: passing argument 2 of 'HAL_ADC_Start_DMA' from incompatible pointer type [-Wincompatible-pointer-types]
+  123 |             HAL_ADC_Start_DMA(&hadc1, adc_buffer, 2);
+      |                                       ^~~~~~~~~~
+      |                                       |
+      |                                       uint16_t * {aka short unsigned int *}
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h:1945:78: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'uint16_t *' {aka 'short unsigned int *'}
+ 1945 | HAL_StatusTypeDef       HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, uint32_t *pData, uint32_t Length);
+      |                                                                    ~~~~~~~~~~^~~~~
+../Core/Src/main.c:126:27: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
+  126 |                 int len = snprintf(msg, sizeof(msg), "ADC: %lu, %lu\r\n",adc_buffer[0], adc_buffer[1]);
+      |                           ^~~~~~~~
+../Core/Src/main.c:21:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+   20 | #include "main.h"
+  +++ |+#include <stdio.h>
+   21 | 
+../Core/Src/main.c:126:27: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
+  126 |                 int len = snprintf(msg, sizeof(msg), "ADC: %lu, %lu\r\n",adc_buffer[0], adc_buffer[1]);
+      |                           ^~~~~~~~
+../Core/Src/main.c:126:27: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+../Core/Src/main.c:126:62: warning: format '%lu' expects argument of type 'long unsigned int', but argument 4 has type 'int' [-Wformat=]
+  126 |                 int len = snprintf(msg, sizeof(msg), "ADC: %lu, %lu\r\n",adc_buffer[0], adc_buffer[1]);
+      |                                                            ~~^           ~~~~~~~~~~~~~
+      |                                                              |                     |
+      |                                                              long unsigned int     int
+      |                                                            %u
+../Core/Src/main.c:126:67: warning: format '%lu' expects argument of type 'long unsigned int', but argument 5 has type 'int' [-Wformat=]
+  126 |                 int len = snprintf(msg, sizeof(msg), "ADC: %lu, %lu\r\n",adc_buffer[0], adc_buffer[1]);
+      |                                                                 ~~^                     ~~~~~~~~~~~~~
+      |                                                                   |                               |
+      |                                                                   long unsigned int               int
+      |                                                                 %u
+arm-none-eabi-gcc -o "Project3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\yttey\Desktop\TRC3500_Project3\Project3\STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Project3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Project3.elf
+ 
+arm-none-eabi-size  Project3.elf 
+arm-none-eabi-objdump -h -S Project3.elf  > "Project3.list"
+   text	   data	    bss	    dec	    hex	filename
+  24904	     92	   2292	  27288	   6a98	Project3.elf
+Finished building: default.size.stdout
+ 
+Finished building: Project3.list
+ 

@@ -49,7 +49,7 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 int isADCFinished = 0;
-uint16_t adc_buffer[2];
+uint16_t adc_buffer[3];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -109,7 +109,7 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-  HAL_ADC_Start_DMA(&hadc1, adc_buffer, 2);
+  HAL_ADC_Start_DMA(&hadc1, adc_buffer, 3);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -120,10 +120,10 @@ int main(void)
 	{
 	    //process data
 	    isADCFinished = 0;
-	    HAL_ADC_Start_DMA(&hadc1, adc_buffer, 2);
+	    HAL_ADC_Start_DMA(&hadc1, adc_buffer, 3);
 		// Print values
 		char msg[64];
-		int len = snprintf(msg, sizeof(msg), "ADC: %lu, %lu\r\n",adc_buffer[0], adc_buffer[1]);
+		int len = snprintf(msg, sizeof(msg), "ADC: %lu, %lu, %lu\r\n",adc_buffer[0], adc_buffer[1], adc_buffer[2]);
 
 		HAL_UART_Transmit(&huart2, (uint8_t*)msg, len, HAL_MAX_DELAY);
 	}

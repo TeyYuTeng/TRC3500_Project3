@@ -49,7 +49,7 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 int isADCFinished = 0;
-uint16_t adc_buffer[2];
+uint16_t adc_buffer[3];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
