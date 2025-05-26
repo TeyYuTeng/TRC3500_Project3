@@ -412,3 +412,10 @@ Finished building: default.size.stdout
  
 Finished building: Project3.list
  
+14:18:30 **** Incremental Build of configuration Debug for project Project3 ****
+make -j16 all 
+arm-none-eabi-size  Project3.elf 
+   text	   data	    bss	    dec	    hex	filename
+  24904	     92	   2292	  27288	   6a98	Project3.elf
+Finished building: default.size.stdout
+ 

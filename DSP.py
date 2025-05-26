@@ -2,6 +2,7 @@ import serial
 import matplotlib.pyplot as plt
 import time
 import csv
+import os
 
 def threshold_peak_detector(signal, threshold):
     """
@@ -24,9 +25,10 @@ def threshold_peak_detector(signal, threshold):
 # ======================
 # Settings
 # ======================
-file_name ='test'
-num_samples = 100
+file_name ='trial4'
+time_window = 20
 sample_interval = 0.1  # seconds per sample
+num_samples = int(time_window/sample_interval)
 
 adc1 = []
 adc2 = []
@@ -60,15 +62,29 @@ try:
     x = [i * sample_interval for i in range(num_samples)]
 
     # Save to CSV
-    with open(f'{file_name}.csv', mode='w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(['Time (s)', 'Thermistor', 'Conductive Band'])
-        for i in range(num_samples):
-            writer.writerow([x[i], adc1[i], adc2[i]])
-    print(f"Data saved to {file_name}.csv\n")
+    
+    csv_filename = f'{file_name}.csv'
+    if os.path.exists(csv_filename):
+        response = input(f"File '{csv_filename}' already exists. Overwrite? (y/n): ").strip().lower()
+        if response == 'y':
+            with open(f'{file_name}.csv', mode='w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(['Time (s)', 'Thermistor', 'Conductive Band'])
+                for i in range(num_samples):
+                    writer.writerow([x[i], adc1[i], adc2[i]])
+            print(f"Data saved to {file_name}.csv\n")
+        else:
+            print("Data not saved")
+    else:
+        with open(f'{file_name}.csv', mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['Time (s)', 'Thermistor', 'Conductive Band'])
+            for i in range(num_samples):
+                writer.writerow([x[i], adc1[i], adc2[i]])
+        print(f"Data saved to {file_name}.csv\n")
 
     # Thermistor
-    threshold1 = 1100
+    threshold1 = (max(adc1) + min(adc1))/2
     peaks1 = threshold_peak_detector(adc1, threshold1)
     est_rate_1 = (len(peaks1) * 60) / (num_samples * sample_interval)
 
@@ -77,7 +93,7 @@ try:
     print(f"Peaks detected: {len(peaks1)}\n")
 
     # Conductive band Sensor
-    threshold2 = 1000
+    threshold2 = (max(adc2) + min(adc2))/2
     peaks2 = threshold_peak_detector(adc2, threshold2)
     est_rate_2 = (len(peaks2) * 60) / (num_samples * sample_interval)
 
@@ -85,10 +101,13 @@ try:
     print(f"Estimated rate: {est_rate_2:.1f} bpm")
     print(f"Peaks detected: {len(peaks2)}\n")
 
-    avg = (est_rate_1 + est_rate_2) / 2
+    weight1 = 0.9  # confidence in thermistor
+    weight2 = 1 - weight1  # confidence in conductive band
 
-    print("=========== Average ==========")
-    print(f"Estimated rate: {avg} bpm\n")
+    fused_bpm = (weight1 * est_rate_1) + (weight2 * est_rate_2)
+
+    print("=========== Final BPM ==========")
+    print(f"Estimated rate (fused): {fused_bpm:.1f} bpm")
 
     # Plotting
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 5), sharex=True)
