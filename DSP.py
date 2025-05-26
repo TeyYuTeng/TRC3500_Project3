@@ -4,6 +4,11 @@ import time
 import csv
 import os
 
+def moving_average(signal, window_size=5):
+    """Applies a simple moving average filter to the signal."""
+    return [sum(signal[i:i+window_size])/window_size if i+window_size <= len(signal) else signal[i]
+            for i in range(len(signal))]
+
 def threshold_peak_detector(signal, threshold):
     """
     Detects peaks in a signal based on threshold crossing:
@@ -25,8 +30,8 @@ def threshold_peak_detector(signal, threshold):
 # ======================
 # Settings
 # ======================
-file_name ='trial4'
-time_window = 20
+file_name ='trial6'
+time_window = 50
 sample_interval = 0.1  # seconds per sample
 num_samples = int(time_window/sample_interval)
 
@@ -83,9 +88,13 @@ try:
                 writer.writerow([x[i], adc1[i], adc2[i]])
         print(f"Data saved to {file_name}.csv\n")
 
+    # Apply moving average filter
+    filtered_adc1 = moving_average(adc1, window_size=5)
+    filtered_adc2 = moving_average(adc2, window_size=5)
+
     # Thermistor
-    threshold1 = (max(adc1) + min(adc1))/2
-    peaks1 = threshold_peak_detector(adc1, threshold1)
+    threshold1 = (max(filtered_adc1) + min(filtered_adc1))/2
+    peaks1 = threshold_peak_detector(filtered_adc1, threshold1)
     est_rate_1 = (len(peaks1) * 60) / (num_samples * sample_interval)
 
     print("=========== Thermistor Sensor ==========")
@@ -93,8 +102,8 @@ try:
     print(f"Peaks detected: {len(peaks1)}\n")
 
     # Conductive band Sensor
-    threshold2 = (max(adc2) + min(adc2))/2
-    peaks2 = threshold_peak_detector(adc2, threshold2)
+    threshold2 = (max(filtered_adc2) + min(filtered_adc2))/2
+    peaks2 = threshold_peak_detector(filtered_adc2, threshold2)
     est_rate_2 = (len(peaks2) * 60) / (num_samples * sample_interval)
 
     print("=========== Conductive band Sensor ==========")
