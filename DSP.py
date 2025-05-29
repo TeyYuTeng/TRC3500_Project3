@@ -30,8 +30,8 @@ def threshold_peak_detector(signal, threshold):
 # ======================
 # Settings
 # ======================
-file_name ='trial6'
-time_window = 50
+file_name ='test'
+time_window = 30
 sample_interval = 0.1  # seconds per sample
 num_samples = int(time_window/sample_interval)
 
@@ -116,7 +116,7 @@ try:
     fused_bpm = (weight1 * est_rate_1) + (weight2 * est_rate_2)
 
     print("=========== Final BPM ==========")
-    print(f"Estimated rate (fused): {fused_bpm:.1f} bpm")
+    print(f"Estimated rate (fused): {round(fused_bpm)} bpm")
 
     # Plotting
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 5), sharex=True)
