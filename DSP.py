@@ -30,8 +30,8 @@ def threshold_peak_detector(signal, threshold):
 # ======================
 # Settings
 # ======================
-file_name ='test'
-time_window = 30
+file_name ='slow_breath'
+time_window = 50
 sample_interval = 0.1  # seconds per sample
 num_samples = int(time_window/sample_interval)
 
