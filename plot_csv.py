@@ -72,7 +72,7 @@ with open(csv_file, newline='') as file:
     print(f"Estimated rate: {est_rate_2:.1f} bpm")
     print(f"Peaks detected: {len(peaks2)}\n")
 
-    weight1 = 0.9  # confidence in thermistor
+    weight1 = 0.5  # confidence in thermistor
     weight2 = 1 - weight1  # confidence in conductive band
 
     fused_bpm = (weight1 * est_rate_1) + (weight2 * est_rate_2)
